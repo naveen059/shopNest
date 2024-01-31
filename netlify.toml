@@ -1,3 +1,3 @@
 [build]
-  command = "npm run production"  # or the command you use to build your assets
+  command = "npm run production && composer install && php artisan migrate --force && php artisan optimize && php artisan storage:link" # or the command you use to build your assets
   publish = "public"  # the directory where the build artifacts are stored
