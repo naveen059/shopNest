@@ -1,0 +1,3 @@
+[build]
+  command = "npm run production"  # or the command you use to build your assets
+  publish = "public"  # the directory where the build artifacts are stored
