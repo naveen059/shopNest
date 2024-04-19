@@ -1,61 +1,66 @@
 
-
-
-.desc{
-    background-image: url('./../images/background.png');
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-}
-
-p{
-  font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 .card{
   border:none;
-  border-radius: 7px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-
-.carousel-caption h5,
-.carousel-caption p {
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px #000000;
+p{
+  font-family: 'Lato', 'Montserrat';
 }
 
-.section-header {
-    text-align: center;
+.nav-link:hover{
+  color: tomato;
 }
 
-.section-content {
-    font-size: 16px;
-    color: #444;
+.selectable-color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
 }
 
-.section-content ul {
-    list-style-type: none;
-    padding: 0;
+.check-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
 }
 
-.section-content li {
-    margin-bottom: 10px;
+.parallax {
+    background-image: url('https://websitedemos.net/custom-printing-02/wp-content/uploads/sites/459/2020/01/banner-02.jpg'); /* Replace 'your-parallax-image.jpg' with your image URL */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    color: black;
 }
 
-.section-content strong {
-    color: #333;
+.selectable-label {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.section-content p {
-    line-height: 1.6;
+.selectable-label.selected {
+    background-color: #2196F3;
+    color: #fff;
 }
 
-#carouselTestimonials{
-  border: 2px solid gray;
-  padding: 30px;
-  margin-bottom: 50px;
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.color-circle:hover {
+    border-color: black;
 }

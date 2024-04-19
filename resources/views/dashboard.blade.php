@@ -23,8 +23,22 @@
       .nav-link:hover{
         color: tomato;
       }
-      .nav-link:active{
-        color: maroon;
+
+      .selectable-color {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: inline-block;
+          cursor: pointer;
+          position: relative;
+      }
+
+      .check-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 10px;
       }
 
       .parallax {
@@ -35,15 +49,19 @@
           height: 80vh;
           color: black;
       }
-      .shop{
-        border-radius:0px;
-        width: 360px;
-        margin-top: 30px;
+
+      .selectable-label {
+          display: inline-block;
+          padding: 5px 10px;
+          margin-right: 10px;
+          background-color: #e0e0e0;
+          border-radius: 5px;
+          cursor: pointer;
       }
-      .shop:hover{
-        color: black;
-        background: white;
-        border: none !important;
+
+      .selectable-label.selected {
+          background-color: #2196F3;
+          color: #fff;
       }
 
 
@@ -193,79 +211,119 @@
     </div>
 
 
-    <div class="container mt-5">
-    <h2 class="text-center" style="font-family: 'Victor serif'">Featured <span class="text-secondary">Products</span></h2>
-    <div class="row row-cols-1 row-cols-md-3 g-3">
+
+
+<div class="container mt-5">
+    <h2 class="text-center mt-5 mb-5" style="font-family: 'Victor serif'"> <i class="fa-solid fa-medal"></i> Featured <span class="text-danger">Products</span></h2>
+    <div class="row row-cols-1 row-cols-md-3">
         @foreach ($products->slice(0, 6) as $product)
-        <div class="col">
-            <div class="card product h-100">
-                <img src="{{ asset($product['image']) }}" class="card-img-top" width="60%" height="50%" alt="Product Image">
-                <div class="card-body">
-                    <span class="badge bg-success" style="float:right;">IN-STOCK</span>
-                    <h5 class="card-title mt-2 mb-3">{{ $product['title'] }} <i class="far heart fa-heart"></i></h5>
-                    <h6> ${{ $product['price'] }} </h6>
-                    <p class="card-text text-muted">{{ $product['description'] }}</p>
+            <div class="col">
+                <div class="card product h-100">
+                    <img src="{{ asset($product['image']) }}" class="card-img-top" width="60%" height="50%" alt="Product Image">
+                    <div class="card-body">
+                        <span class="badge bg-success" style="float:right;">IN-STOCK</span>
+                        <h5 class="card-title mt-2 mb-3" style="font-family: 'Open sans'"><strong>{{ $product['title'] }}</strong> <i class="far heart fa-heart"></i></h5>
 
-                    @if(strpos($product['title'], 'shoes') !== false)
-                    <div class="mb-3">
-                        <div class="d-inline">
-                            <label for="color-black" class="color-circle bg-black"></label>
-                            <label for="color-white" class="color-circle bg-light" style="border: 0.4px solid black;"></label>
-                            <label for="color-gray" class="color-circle bg-secondary"></label>
-                            <label for="color-yellow" class="color-circle bg-warning"></label>
-                            <label for="color-blue" class="color-circle bg-primary"></label>
-                            <label for="color-green" class="color-circle bg-success"></label>
-                            <label for="color-red" class="color-circle bg-danger"></label>
-                            <label for="color-info" class="color-circle bg-info"></label>
-
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mx-1"> ${{ $product['price'] }} </h6>
+                            <div class="input-group input-group-sm mx-3 mb-2">
+                                <button class="btn btn-outline-secondary" type="button" onclick="decreaseValue({{ $loop->index }})">-</button>
+                                <input type="text" class="text-center w-25" id="quantity_{{ $loop->index }}" style="border: 0.4px solid grey;" value="1" aria-label="Quantity" readonly>
+                                <button class="btn btn-outline-secondary" type="button" onclick="increaseValue({{ $loop->index }})">+</button>
+                            </div>
                         </div>
-                        <input type="hidden" id="selected-color" name="color" value="">
-                    </div>
-                    @else
+                        <p class="card-text text-muted">{{ $product['description'] }}</p>
+
+                        @php
+                            $productType = strtolower($product['title']);
+                        @endphp
+
+                        @php
+                            $colors = [];
+                            switch ($productType) {
+                                case 't-shirts':
+                                    $colors = ['Red', 'Blue', 'Green', 'Yellow', 'White', 'Black'];
+                                    break;
+                                case 'shoes':
+                                    $colors = ['Red', 'Blue', 'White', 'Black', 'Grey'];
+                                    break;
+                                case 'shirts':
+                                    $colors = ['Red', 'Blue', 'Green', 'Yellow', 'White', 'Black'];
+                                    break;
+                                case 'dress':
+                                    $colors = ['Red', 'Blue', 'White', 'Black', 'Pink'];
+                                    break;
+                                case 'trouser':
+                                    $colors = ['Black', 'White', 'Gray', 'Brown', 'Blue', 'Green'];
+                                    break;
+                                case 'saree':
+                                    $colors = ['Red', 'Pink', 'Blue', 'Yellow', 'Purple', 'Green'];
+                                    break;
+                                case 'jacket':
+                                    $colors = ['Black', 'Brown', 'Gray', 'Blue', 'Green'];
+                                    break;
+                                default:
+                                    $colors = [];
+                            }
+                        @endphp
+
                         <div class="mb-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="size" id="size-xs" value="xs">
-                                <label class="form-check-label" for="size-xs">XS</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="size" id="size-s" value="s">
-                                <label class="form-check-label" for="size-s">S</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="size" id="size-m" value="m">
-                                <label class="form-check-label" for="size-m">M</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="size" id="size-l" value="l">
-                                <label class="form-check-label" for="size-l">L</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="size" id="size-xl" value="xl">
-                                <label class="form-check-label" for="size-xl">XL</label>
-                            </div>
-
+                            @foreach ($colors as $color)
+                            <div class="selectable-color" onclick="toggleColor(this)" style="background-color: {{ strtolower($color) }}; width: 30px; height: 30px; border-radius: 50%; display: inline-block; cursor: pointer;"></div>
+                            @endforeach
+                            <input type="hidden" id="selected-color" name="color" value="">
                         </div>
-                    @endif
 
-                    <div class="d-flex justify-content-between align-items-center">
-
-                        <div class="input-group input-group-sm">
-                            <button class="btn btn-outline-secondary" type="button" onclick="decreaseValue()">-</button>
-                            <input type="text" class="form-control text-center w-25" id="quantity" value="1" aria-label="Quantity" readonly>
-                            <button class="btn btn-outline-secondary" type="button" onclick="increaseValue()">+</button>
+                        <div class="mb-3">
+                            @php
+                                $sizes = [];
+                                switch ($productType) {
+                                    case 't-shirt':
+                                        $sizes = ['XS', 'S', 'M', 'L', 'XL'];
+                                        break;
+                                    case 'shirt':
+                                        $sizes = ['30', '32', '34', '36', '38', '40', '42', '44', '46'];
+                                        break;
+                                    case 'trouser':
+                                        $sizes = ['28', '30', '32', '34', '36', '38', '40'];
+                                        break;
+                                    case 'shoes':
+                                        $sizes = ['6', '7', '8', '9', '10', '11', '12'];
+                                        break;
+                                    case 'dress':
+                                        $sizes = ['Small', 'Medium', 'Large', 'X-Large'];
+                                        break;
+                                    case 'saree':
+                                        $sizes = ['Saree Length', 'Saree with Blouse', 'Semi-Stitched', 'Unstitched'];
+                                        break;
+                                    case 'jacket':
+                                        $sizes = ['38', '40', '42', '44', '46'];
+                                        break;
+                                    default:
+                                        $sizes = ['XS', 'S', 'M', 'L', 'XL'];
+                                }
+                            @endphp
+                            @foreach ($sizes as $size)
+                                <div class="selectable-label" onclick="toggleLabel(this)">{{ $size }}</div>
+                            @endforeach
                         </div>
+
+
+
+                        <form action="{{ route('place.order', ['product' => $product['id']]) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                            <button type="submit" class="btn btn-warning btn-sm mt-3 w-100">
+                                <i class="fa-solid fa-cart-shopping"></i> &nbsp; <span style="font-family: 'Open Sans'; font-weight: bold;">Add to Cart</span>
+                            </button>
+                        </form>
                     </div>
-                    <form action="{{ route('place.order', ['product' => $product['id']]) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product['id'] }}">
-                        <button type="submit" class="btn btn-warning btn-sm mt-3 w-100"> <i class="fa-solid fa-cart-shopping"></i> &nbsp; <span style="font-family: 'Open Sans'; font-weight: bold;">Add to Cart</span></button>
-                    </form>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
 </div>
+
 
 
 
@@ -499,6 +557,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 @if(session('success'))
         <script>
             $(document).ready(function () {
@@ -527,19 +586,52 @@
     });
 
 
-     function increaseValue() {
-    var value = parseInt(document.getElementById('quantity').value, 10);
-    value = isNaN(value) ? 0 : value;
-    value++;
-    document.getElementById('quantity').value = value;
-  }
+    function toggleColor(colorDiv) {
+        var colorDivs = document.querySelectorAll('.selectable-color');
+        colorDivs.forEach(function(item) {
+            item.classList.remove('selected');
+            item.innerHTML = '';
+        });
 
-  function decreaseValue() {
-    var value = parseInt(document.getElementById('quantity').value, 10);
-    value = isNaN(value) ? 0 : value;
-    value--;
-    document.getElementById('quantity').value = value < 1 ? 1 : value;
-  }
+        colorDiv.classList.add('selected');
+        var checkIcon = document.createElement('i');
+        checkIcon.classList.add('fas', 'fa-check', 'check-icon');
+
+        var computedStyle = window.getComputedStyle(colorDiv);
+        var backgroundColor = computedStyle.backgroundColor;
+        var rgb = backgroundColor.match(/\d+/g);
+        var brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+
+        checkIcon.style.color = (brightness > 125) ? 'black' : 'white';
+
+        colorDiv.appendChild(checkIcon);
+
+        var selectedColor = colorDiv.style.backgroundColor;
+        document.getElementById('selected-color').value = selectedColor;
+    }
+
+    function toggleLabel(label) {
+        var labels = document.querySelectorAll('.selectable-label');
+        labels.forEach(function(item) {
+            item.classList.remove('selected');
+        });
+
+        label.classList.add('selected');
+    }
+
+    function increaseValue(index) {
+       var value = parseInt(document.getElementById('quantity_' + index).value, 10);
+       value = isNaN(value) ? 0 : value;
+       value++;
+       document.getElementById('quantity_' + index).value = value;
+   }
+
+   function decreaseValue(index) {
+       var value = parseInt(document.getElementById('quantity_' + index).value, 10);
+       value = isNaN(value) ? 0 : value;
+       value--;
+       document.getElementById('quantity_' + index).value = value < 1 ? 1 : value;
+   }
 
   var shoppingTrendData = [
         { date: '2024-01-01', value: 100 },
@@ -549,11 +641,11 @@
         { date: '2024-05-01', value: 220 }
     ];
 
-    // Extract dates and values from data
+
     var dates = shoppingTrendData.map(item => item.date);
     var values = shoppingTrendData.map(item => item.value);
 
-    // Generate the Highcharts line chart
+
     Highcharts.chart('shoppingTrendChart', {
         chart: {
             type: 'line'
