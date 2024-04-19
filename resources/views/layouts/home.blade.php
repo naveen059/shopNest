@@ -19,6 +19,9 @@
         body {
             display: flex;
             flex-direction: column;
+            background: url("/images/bgform.png");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         main {
@@ -30,7 +33,7 @@
     <center>
         <a class="navbar-brand" href="/">
             <img src="{{ asset('images/apple-touch-icon.png') }}" width="50px" height="50px" style="margin-left: 20px;">
-            <span style="vertical-align: middle; font-family: 'oswald'; font-size: 30px; color: black;">ShopNest</span>
+            <span style="vertical-align: middle; font-family: 'oswald'; font-size: 30px; color: black;"> ShopNest</span>
         </a>
     </center>
 

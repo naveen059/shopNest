@@ -3,7 +3,11 @@
     <form method="POST" action="{{ route('register') }}" class="needs-validation" novalidate>
         @csrf
 
-        
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img class="mx-auto h-10 w-auto" src="{{asset('/images/apple-touch-icon.png')}}" alt="ShopNest">
+          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Register your Account</h2>
+        </div>
+
         <div class="mb-3">
             <x-input-label for="name" :value="__('Name')" />
             <div class="input-group">
@@ -27,7 +31,7 @@
             </div>
         </div>
 
-        
+
         <div class="mb-3">
             <x-input-label for="password" :value="__('Password')" />
             <div class="input-group">
@@ -42,7 +46,7 @@
             </div>
         </div>
 
-        
+
         <div class="mb-3">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
             <div class="input-group">
@@ -60,7 +64,7 @@
             <a class="text-decoration-none me-3" href="{{ route('login') }}">
                 <i class="fas fa-sign-in-alt"></i> {{ __('Already registered?') }}
             </a>
-
+            &nbsp;
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i> {{ __('Register') }}
             </button>

@@ -19,6 +19,9 @@ function toggleAnswer(collapseId) {
         collapseElement.classList.add('show');
         caretIcon.innerText = '-';
     }
+
+    collapseElement.style.background = "aliceblue"
+    collapseElement.style.color = "gray"
 }
 
 function addToCart(productName, price) {

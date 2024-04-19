@@ -1,13 +1,11 @@
 @extends('layouts.home')
 
 
-<!-- Add these links in the head section of your HTML -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" defer></script>
-
 
 
 @section('content')
@@ -75,7 +73,7 @@
                 return formattedDate;
             }
 
-            
+
 
         function getFormattedLastUpdated(timestamp) {
             const now = new Date();
@@ -114,7 +112,7 @@
                 formData.append('price', price);
                 formData.append('image', imageFile);
 
-                
+
                 const newRow = `
                     <tr>
                         <td><img src="${URL.createObjectURL(imageFile)}" alt="${title}" class="product-image"></td>
@@ -153,4 +151,3 @@
             }
     </script>
 @endsection
-
